@@ -1,44 +1,61 @@
-import { useState } from "react";
-import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
-import s from './ContactForm.module.css'
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import s from "./ContactForm.module.css";
+import { nanoid } from "nanoid";
+import { useId } from "react";
+import PropTypes from 'prop-types';
 
-const ContactForm =() => {
-     const handleSubmit = (values, actions) => {
-     actions.resetForm();
+const ContactForm = ({ contactsArray }) => {
+  const nameFieldId = useId();
+  const numberFieldId = useId();
+
+  const submitForm = (values, actions) => {
+    const contactData = {
+      id: nanoid(),
+      ...values,
+    };
+
+    contactsArray(contactData);
+    actions.resetForm();
+  };
+
+  const feedbackSchema = Yup.object().shape({
+    name: Yup.string().min(3).max(20).required("Required"), 
+    number: Yup.string().min(7).max(20).required("Required"), 
+        });
+
+      ContactForm.propTypes = {
+        contactsArray: PropTypes.func.isRequired, 
       };
-const registerSchema = Yup.object().shape({
-  username: Yup.string().required().min(3).max(20),
-  number: Yup.string().required().min(3).max(20),
-})
-return (
-    <div className={s.formWrapper}>
-    <Formik 
-    onSubmit={handleSubmit} 
-    initialValues={
-      {username: '',
-       number: ''
-              }
-            }
-    validationSchema = {registerSchema}    
-            >
+        
+  return (
+    <Formik
+      initialValues={{ name: "", number: "" }}
+      validationSchema={feedbackSchema}
+      onSubmit={submitForm}
+    >
+ 
+      {() => (
         <Form className={s.form}>
-        <label className={s.label}>
-                <span>Name</span>
-                <Field className={s.input} type="text" name="username"/>
-                <ErrorMessage name="username" className={s.error} component="div" />
-            </label>
-            <label className={s.label}>
-                <span>Number</span>
-                <Field className={s.input} type="text" name="number"/>
-                <ErrorMessage name="number" className={s.error} component="div" />
-            </label>
-            
-            <button className={s.button} type="submit">Submit</button>                    
+          <div>
+          <label className={s.label}>Name</label>         
+            <Field className={s.input} type="text" name="name" id={nameFieldId} />
+            <ErrorMessage name="name" className={s.error} component="div" />
+          </div>
+          
+          <div>
+          <label className={s.label}>Number</label>
+            <Field className={s.input} type="text" name="number" id={numberFieldId}/>
+            <ErrorMessage name="number" className={s.error} component="div" />
+            </div>
+
+          <button type="submit" className={s.button}>
+            Add contact
+          </button>
         </Form>
-      </Formik>
-    </div>
-)
-}
+      )}
+    </Formik>
+  );
+};
 
 export default ContactForm;
