@@ -39,13 +39,13 @@ const ContactForm = ({ contactsArray }) => {
         <Form className={s.form}>
           <div>
           <label className={s.label}>Name</label>         
-            <Field className={s.input} type="text" name="name" id={nameFieldId} />
+            <Field className={s.input} type="text" name="name" id={nameFieldId} style={{ padding: "8px 16px", borderRadius: 6 }}/>
             <ErrorMessage name="name" className={s.error} component="div" />
           </div>
           
           <div>
           <label className={s.label}>Number</label>
-            <Field className={s.input} type="text" name="number" id={numberFieldId}/>
+            <Field className={s.input} type="text" name="number" id={numberFieldId} style={{ padding: "8px 16px", borderRadius: 6 }}/>
             <ErrorMessage name="number" className={s.error} component="div" />
             </div>
 

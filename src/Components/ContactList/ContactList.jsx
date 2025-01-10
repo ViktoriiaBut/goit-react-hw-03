@@ -10,12 +10,12 @@ const ContactList = ({ contacts, onDeleteContact }) => {
 
   return (
    <ul className={s.contactList}>
-    {contacts.map(({ id, name, contact}, index) => (
+    {contacts.map(({ id, name, number}, index) => (
       <Contact
       key={index} 
       id={id}
       name={name}
-      contact={contact}
+      number={number}
       deleteNumber={onDeleteContact}
       />
         ))}

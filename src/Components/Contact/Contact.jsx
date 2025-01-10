@@ -25,7 +25,7 @@ const Contact = ({ id, name, number, deleteNumber }) => {
 Contact.propTypes = {
     id: PropTypes.string.isRequired, 
     name: PropTypes.string.isRequired,
-    number: PropTypes.string.isRequired, 
+    number: PropTypes.func.isRequired, 
     deleteNumber: PropTypes.func.isRequired,   
 };
 
